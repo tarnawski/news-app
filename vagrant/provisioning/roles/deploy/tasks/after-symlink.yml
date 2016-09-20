@@ -1,0 +1,7 @@
+---
+- name: Create app cache and logs directory
+  file: path={{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }}/var/{{ item }} state=directory mode=0777 recurse=yes
+  with_items:
+    - cache
+    - logs
+

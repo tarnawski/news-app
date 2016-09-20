@@ -1,0 +1,16 @@
+index:
+  path:     /
+  defaults: { _controller: NewsBundle:News:index}
+  methods: [GET]
+
+show:
+  path:     /{id}
+  defaults: { _controller: NewsBundle:News:show}
+  methods: [GET]
+  requirements:
+      id: '\d+'
+
+create:
+  path:     /create
+  defaults: { _controller: NewsBundle:News:create}
+  methods: [GET]

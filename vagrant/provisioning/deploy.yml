@@ -1,0 +1,18 @@
+---
+- name: Deploy last wishes app to my server
+  hosts: staging
+  become: yes
+  become_method: sudo
+  vars:
+    symfony_env: dev
+    ansistrano_deploy_to: "/var/www/news-app"
+    ansistrano_deploy_from: "{{ playbook_dir }}/news-app.tar"
+    ansistrano_deploy_via: "copy_unarchive"
+    ansistrano_archived_file: "news-app.tar"
+    ansistrano_after_symlink_tasks_file: "{{ playbook_dir }}/roles/deploy/tasks/after-symlink.yml"
+    ansistrano_allow_anonymous_stats: no
+    ansistrano_keep_releases: 20
+    ansistrano_rsync_set_remote_user: news-app
+
+  roles:
+    - { role: carlosbuenosvinos.ansistrano-deploy }

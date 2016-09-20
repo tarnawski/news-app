@@ -1,0 +1,26 @@
+{
+  "name": "tarnawski/news-app",
+  "authors": [
+    {
+      "name": "Tomasz Tarnawski",
+      "email": "tarnawski27@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.0",
+    "symfony/symfony": "~3.0",
+    "symfony/framework-bundle": "^3.0",
+    "sensio/framework-extra-bundle": "^3.0"
+  },
+  "autoload": {
+    "classmap": [
+      "app/AppKernel.php"
+    ],
+    "psr-4": {
+      "": "src/"
+    }
+  },
+  "config": {
+    "bin-dir": "bin"
+  }
+}

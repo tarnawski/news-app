@@ -1,0 +1,5 @@
+[develop]
+vagrant ansible_ssh_host=10.0.0.200
+
+[staging]
+staging   ansible_ssh_host=10.0.0.201

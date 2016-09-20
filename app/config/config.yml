@@ -1,0 +1,44 @@
+parameters:
+    secret_key: SecretToken
+
+services:
+  news.repository.post:
+    class: NewsBundle\Repository\InMemoryPostRepository
+
+  news.command.create:
+    class: News\Command\CreatePostCommandHandler
+    arguments:
+      - '@news.repository.post'
+
+  news.query.all_posts:
+    class: News\Query\AllPostsQueryHandler
+    arguments:
+      - '@news.repository.post'
+
+  news.query.post:
+    class: News\Query\PostQueryHandler
+    arguments:
+      - '@news.repository.post'
+
+  news.command.create:
+    class: News\Command\CreatePostHandler
+    arguments:
+      - '@news.repository.post'
+
+  news.command_bus:
+    class: News\ServiceBus\CommandBus
+    calls:
+       - [register, ['@news.command.create']]
+
+  news.query_bus:
+    class: News\ServiceBus\QueryBus
+    calls:
+       - [register, ['@news.query.all_posts']]
+       - [register, ['@news.query.post']]
+
+framework:
+    secret: '%secret_key%'
+    form: ~
+    assets: ~
+    templating:
+        engines: ['twig']

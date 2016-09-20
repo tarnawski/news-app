@@ -1,0 +1,11 @@
+--- 
+- name: Prepare basic env for php apps on all nodes
+  hosts: staging
+  become: yes
+  become_method: sudo
+  roles:
+    - apache
+    - php7.0
+    - mysql
+    - project
+

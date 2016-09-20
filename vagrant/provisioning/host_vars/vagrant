@@ -1,0 +1,13 @@
+---
+project_name: news-app
+project_root: "/var/www/{{ project_name }}"
+project_web_root: "{{ project_root }}/web"
+project_databases:
+  - "{{ project_name }}"
+  - "{{ project_name }}-dev"
+  - "{{ project_name }}-tst"
+
+composer_download_url: https://getcomposer.org/composer.phar
+
+mysql_port: 3306
+mysql_pass: rootpassword
