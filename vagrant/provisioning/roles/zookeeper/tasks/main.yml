@@ -1,0 +1,44 @@
+---
+- name: Download Zookeeper
+  get_url: url=http://archive.apache.org/dist/zookeeper/{{zookeeper_version}}/{{zookeeper_version}}.tar.gz dest=/tmp/{{zookeeper_version}}.tar.gz
+
+- name: Untar Zookeeper
+  unarchive:
+    src: "{{ workspace }}/{{zookeeper_version}}.tar.gz"
+    dest: "{{ workspace }}/"
+    copy: no
+
+- name: Build Zookeeper
+  shell: >
+    {{ item }}
+    chdir={{ workspace }}/{{zookeeper_version}}/src/c
+  with_items:
+    - ./configure --prefix=/usr/local/zookeeper
+    - make
+    - make install
+
+- name: Download Zookeeper Extansion
+  get_url: url=https://pecl.php.net/get/{{zookeeper_extansion_version}}.tgz dest=/tmp/{{zookeeper_extansion_version}}.tgz
+
+- name: Untar Zookeeper
+  unarchive:
+    src: "{{ workspace }}/{{zookeeper_extansion_version}}.tgz"
+    dest: "{{ workspace }}/"
+    copy: no
+
+- name: Build Zookeeper Extansion
+  shell: >
+    {{ item }}
+    chdir={{ workspace }}/{{zookeeper_extansion_version}}
+  with_items:
+    - phpize
+    - ./configure --with-libzookeeper-dir=/usr/local/zookeeper
+    - make
+    - make install
+
+- name: Zookeeper | Adding extension into php.ini files
+  lineinfile:
+    dest=/etc/php/5.6/apache2/php.ini
+    line="extension="/usr/lib/php/20131226/zookeeper.so""
+  notify: restart apache
+

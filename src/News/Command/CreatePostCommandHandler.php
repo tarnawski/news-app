@@ -2,27 +2,36 @@
 
 namespace News\Command;
 
-use News\Model\Post;
-use News\Model\PostId;
+use News\DomainModel\PostWasCreated;
+use News\AbstractEventNotifier;
+use News\AbstractEventProjector;
+use News\AbstractEventStore;
 
 class CreatePostCommandHandler
 {
-    private $postRepository;
+    private $eventStore;
+    private $eventNotifier;
+    private $eventProjector;
 
-    public function __construct($postRepository)
-    {
-        $this->postRepository = $postRepository;
+    public function __construct(
+        AbstractEventStore $eventStore,
+        AbstractEventNotifier $eventNotifier,
+        AbstractEventProjector $eventProjector
+    ) {
+        $this->eventStore = $eventStore;
+        $this->eventNotifier = $eventNotifier;
+        $this->eventProjector = $eventProjector;
     }
 
     public function handle(CreatePostCommand $createPostCommand)
     {
-        $postId = new PostId(rand(0,100));
-        $post = new Post(
-            $postId,
-            $createPostCommand->getTitle(),
-            $createPostCommand->getContent()
+        $event = new PostWasCreated(
+          $createPostCommand->getTitle(),
+          $createPostCommand->getContent()
         );
 
-        $this->postRepository->add($post);
+        $this->eventStore->commit($event->serialize());
+        $this->eventProjector->project($event);
+        $this->eventNotifier->notify($event->serialize());
     }
 }

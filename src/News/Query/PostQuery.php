@@ -4,18 +4,18 @@ namespace News\Query;
 
 class PostQuery
 {
-    private $id;
+    private $uuid;
 
-    public function __construct($id)
+    public function __construct($uuid)
     {
-        $this->id = $id;
+        $this->uuid = $uuid;
     }
 
     /**
      * @return mixed
      */
-    public function getId()
+    public function getUuid()
     {
-        return $this->id;
+        return $this->uuid;
     }
 }

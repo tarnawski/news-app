@@ -8,7 +8,8 @@
   roles:
     - tools
     - apache
-    - php7.0
+    - php5.6
+    - zookeeper
     - mysql
     - composer
     - project

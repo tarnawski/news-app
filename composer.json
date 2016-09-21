@@ -10,7 +10,10 @@
     "php": "^7.0",
     "symfony/symfony": "~3.0",
     "symfony/framework-bundle": "^3.0",
-    "sensio/framework-extra-bundle": "^3.0"
+    "sensio/framework-extra-bundle": "^3.0",
+    "doctrine/doctrine-bundle": "^1.6",
+    "doctrine/orm": "^2.5",
+    "nmred/kafka-php": "0.1.*"
   },
   "autoload": {
     "classmap": [

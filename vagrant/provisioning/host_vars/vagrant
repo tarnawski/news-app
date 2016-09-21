@@ -11,3 +11,8 @@ composer_download_url: https://getcomposer.org/composer.phar
 
 mysql_port: 3306
 mysql_pass: rootpassword
+
+#Zookeeper
+workspace: /tmp
+zookeeper_version: zookeeper-3.4.6
+zookeeper_extansion_version: zookeeper-0.2.2

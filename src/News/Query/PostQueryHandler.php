@@ -13,6 +13,6 @@ class PostQueryHandler
 
     public function handle(PostQuery $postsQuery)
     {
-        return $this->postRepository->find($postsQuery->getId());
+        return $this->postRepository->find($postsQuery->getUuid());
     }
 }

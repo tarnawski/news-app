@@ -1,0 +1,52 @@
+services:
+  news_bundle.repository.post:
+    class: Doctrine\ORM\EntityRepository
+    factory: ['@doctrine.orm.entity_manager', getRepository]
+    arguments:
+      - NewsBundle\Entity\Post
+
+  kafka.produce:
+    class: Kafka\Produce
+    arguments:
+      - %kafka_host%:%kafka_port%
+      - %kafka_timeout%
+
+  news_bundle.service.event_store:
+    class: NewsBundle\Service\EventStoreService
+    arguments:
+      - %kernel.root_dir%'
+
+  news_bundle.service.event_projector:
+    class: NewsBundle\Service\EventProjectorService
+    arguments:
+      - '@doctrine.orm.entity_manager'
+
+  news_bundle.service.event_notifier:
+    class: NewsBundle\Service\EventNotifierService
+    arguments:
+      - %kafka_topic%
+      - '@kafka.produce'
+
+  news.command.create:
+    class: News\Command\CreatePostCommandHandler
+    arguments:
+      - '@news_bundle.service.event_store'
+      - '@news_bundle.service.event_notifier'
+      - '@news_bundle.service.event_projector'
+
+  news.command_bus:
+    class: News\ServiceBus\CommandBus
+    calls:
+       - [register, ['@news.command.create']]
+
+  news.query.post:
+    class: News\Query\PostQueryHandler
+    arguments:
+      - '@news_bundle.repository.post'
+
+  news.query_bus:
+    class: News\ServiceBus\QueryBus
+    calls:
+       - [register, ['@news.query.post']]
+
+

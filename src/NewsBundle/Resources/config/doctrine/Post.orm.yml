@@ -1,0 +1,21 @@
+NewsBundle\Entity\Post:
+    type: entity
+    table: post
+    id:
+      id:
+        type: integer
+        generator:
+          strategy: AUTO
+    fields:
+        title:
+            column: title
+            type: string
+            nullable: false
+            length: 255
+        content:
+            column: content
+            type: string
+            nullable: false
+            length: 255
+
+    lifecycleCallbacks: {  }

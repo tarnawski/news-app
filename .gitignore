@@ -3,4 +3,5 @@
 /bin/*
 !/bin/console
 /vagrant/.vagrant
-/var
+/var/
+event_storage.data
