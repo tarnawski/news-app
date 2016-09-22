@@ -1,40 +1,11 @@
 parameters:
     secret_key: SecretToken
-
-services:
-  news.repository.post:
-    class: NewsBundle\Repository\InMemoryPostRepository
-
-  news.command.create:
-    class: News\Command\CreatePostCommandHandler
-    arguments:
-      - '@news.repository.post'
-
-  news.query.all_posts:
-    class: News\Query\AllPostsQueryHandler
-    arguments:
-      - '@news.repository.post'
-
-  news.query.post:
-    class: News\Query\PostQueryHandler
-    arguments:
-      - '@news.repository.post'
-
-  news.command.create:
-    class: News\Command\CreatePostHandler
-    arguments:
-      - '@news.repository.post'
-
-  news.command_bus:
-    class: News\ServiceBus\CommandBus
-    calls:
-       - [register, ['@news.command.create']]
-
-  news.query_bus:
-    class: News\ServiceBus\QueryBus
-    calls:
-       - [register, ['@news.query.all_posts']]
-       - [register, ['@news.query.post']]
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     news-app
+    database_user:     root
+    database_password: rootpassword
 
 framework:
     secret: '%secret_key%'
@@ -42,3 +13,34 @@ framework:
     assets: ~
     templating:
         engines: ['twig']
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
+jms_serializer:
+    metadata:
+        auto_detection: true
+
+fos_rest:
+    param_fetcher_listener: true
+    service:
+        serializer: jms_serializer.serializer
+    serializer:
+        serialize_null: true
+    routing_loader:
+        default_format: json
+    view:
+        view_response_listener: 'force'
+        serialize_null: true
+        formats:
+            json: true
+            xml:  true

@@ -1,0 +1,22 @@
+CoreDomainBundle\Entity\Post:
+    type: entity
+    table: post
+    repositoryClass: CoreDomainBundle\Repository\Doctrine\PostRepository
+    id:
+        uuid:
+            column: uuid
+            type: string
+            unique: true
+    fields:
+        title:
+            column: title
+            type: string
+            nullable: false
+            length: 255
+        content:
+            column: content
+            type: string
+            nullable: false
+            length: 255
+
+    lifecycleCallbacks: {  }

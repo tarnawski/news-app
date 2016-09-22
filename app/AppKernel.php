@@ -16,8 +16,11 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
 
-            new NewsBundle\NewsBundle(),
+            new CoreDomainBundle\CoreDomainBundle(),
         ];
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

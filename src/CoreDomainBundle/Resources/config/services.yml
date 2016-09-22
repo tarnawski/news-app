@@ -1,0 +1,43 @@
+services:
+  core.repository.post:
+    class: Doctrine\ORM\EntityRepository
+    factory: ['@doctrine.orm.entity_manager', getRepository]
+    arguments:
+      - CoreDomainBundle\Entity\Post
+
+  core.command.create:
+    class: CoreDomain\Command\CreatePostCommandHandler
+    arguments:
+      - '@core.repository.post'
+
+  core.command.delete:
+    class: CoreDomain\Command\DeletePostCommandHandler
+    arguments:
+      - '@core.repository.post'
+
+  core.query.all_posts:
+    class: CoreDomain\Query\AllPostsQueryHandler
+    arguments:
+      - '@core.repository.post'
+
+  core.query.post:
+    class: CoreDomain\Query\PostQueryHandler
+    arguments:
+      - '@core.repository.post'
+
+  core.command.create:
+    class: CoreDomain\Command\CreatePostHandler
+    arguments:
+      - '@core.repository.post'
+
+  core.command_bus:
+    class: CoreDomain\ServiceBus\CommandBus
+    calls:
+       - [register, ['@core.command.create']]
+       - [register, ['@core.command.delete']]
+
+  core.query_bus:
+    class: CoreDomain\ServiceBus\QueryBus
+    calls:
+       - [register, ['@core.query.all_posts']]
+       - [register, ['@core.query.post']]

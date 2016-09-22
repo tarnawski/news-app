@@ -1,0 +1,12 @@
+CoreDomainBundle\Entity\Post:
+  exclusion_policy: ALL
+  properties:
+    uuid:
+      expose: true
+      groups: [DETAILS]
+    title:
+      expose: true
+      groups: [DETAILS]
+    content:
+      expose: true
+      groups: [DETAILS]

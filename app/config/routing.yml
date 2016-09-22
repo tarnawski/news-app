@@ -1,16 +1,23 @@
-index:
+list:
   path:     /
-  defaults: { _controller: NewsBundle:News:index}
+  defaults: { _controller: CoreDomainBundle:News:list, _format: json }
   methods: [GET]
 
 show:
-  path:     /{id}
-  defaults: { _controller: NewsBundle:News:show}
+  path:     /{uuid}
+  defaults: { _controller: CoreDomainBundle:News:show, _format: json }
   methods: [GET]
   requirements:
-      id: '\d+'
+      uuid: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
 
 create:
   path:     /create
-  defaults: { _controller: NewsBundle:News:create}
-  methods: [GET]
+  defaults: { _controller: CoreDomainBundle:News:create, _format: json }
+  methods: [POST]
+
+delete:
+  path:     /{uuid}
+  defaults: { _controller: CoreDomainBundle:News:delete, _format: json }
+  methods: [DELETE]
+  requirements:
+      uuid: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
