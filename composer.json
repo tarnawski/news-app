@@ -15,7 +15,8 @@
     "doctrine/doctrine-bundle": "^1.6",
     "doctrine/orm": "^2.5",
     "jms/serializer-bundle": "^1.1",
-    "ramsey/uuid": "^3.4"
+    "ramsey/uuid": "^3.4",
+    "nmred/kafka-php": "0.1.*"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "~2.0"

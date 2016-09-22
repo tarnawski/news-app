@@ -5,15 +5,35 @@ services:
     arguments:
       - CoreDomainBundle\Entity\Post
 
+  core.service.event_store:
+    class: CoreDomainBundle\Service\EventStoreService
+    arguments:
+      - %kernel.root_dir%'
+
+  core.service.event_projector:
+    class: CoreDomainBundle\Service\EventProjectorService
+    arguments:
+      - '@core.repository.post'
+
+  core.service.event_notifier:
+    class: CoreDomainBundle\Service\EventNotifierService
+    arguments:
+      - %kafka_topic%
+      - '@kafka.produce'
+
   core.command.create:
     class: CoreDomain\Command\CreatePostCommandHandler
     arguments:
-      - '@core.repository.post'
+      - '@core.service.event_store'
+      - '@core.service.event_notifier'
+      - '@core.service.event_projector'
 
   core.command.delete:
     class: CoreDomain\Command\DeletePostCommandHandler
     arguments:
-      - '@core.repository.post'
+      - '@core.service.event_store'
+      - '@core.service.event_notifier'
+      - '@core.service.event_projector'
 
   core.query.all_posts:
     class: CoreDomain\Query\AllPostsQueryHandler
@@ -41,3 +61,9 @@ services:
     calls:
        - [register, ['@core.query.all_posts']]
        - [register, ['@core.query.post']]
+
+  kafka.produce:
+    class: Kafka\Produce
+    arguments:
+      - %kafka_host%:%kafka_port%
+      - %kafka_timeout%

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "32a6bab372c5cc74ffb8d8eaae4bdf59",
-    "content-hash": "ed57295d7e6b242a9df58831924b2116",
+    "hash": "699bc4ba725ec69690c561aabaff8f93",
+    "content-hash": "6286b72cc6ee52cf6d7116334ae716ac",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1141,6 +1141,46 @@
                 "xml"
             ],
             "time": "2015-11-10 12:26:42"
+        },
+        {
+            "name": "nmred/kafka-php",
+            "version": "v0.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nmred/kafka-php.git",
+                "reference": "317ad8c208684db8b9e6d2f5bf7f471e89a8b4eb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nmred/kafka-php/zipball/317ad8c208684db8b9e6d2f5bf7f471e89a8b4eb",
+                "reference": "317ad8c208684db8b9e6d2f5bf7f471e89a8b4eb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpcov": "*",
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Kafka\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Kafka client for php",
+            "homepage": "http://www.swanlinux.net",
+            "keywords": [
+                "client",
+                "kafka"
+            ],
+            "time": "2015-12-02 12:06:23"
         },
         {
             "name": "paragonie/random_compat",

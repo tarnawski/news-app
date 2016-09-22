@@ -2,28 +2,38 @@
 
 namespace CoreDomain\Command;
 
-use CoreDomain\AbstractPostRepository;
-use CoreDomain\Model\Post;
+use Common\PostWasCreated;
+use CoreDomain\AbstractEventNotifier;
+use CoreDomain\AbstractEventProjector;
+use CoreDomain\AbstractEventStore;
 use CoreDomain\Model\PostId;
 
 class CreatePostCommandHandler
 {
-    /** @var AbstractPostRepository */
-    private $postRepository;
+    private $eventStore;
+    private $eventNotifier;
+    private $eventProjector;
 
-    public function __construct(AbstractPostRepository $postRepository)
-    {
-        $this->postRepository = $postRepository;
+    public function __construct(
+        AbstractEventStore $eventStore,
+        AbstractEventNotifier $eventNotifier,
+        AbstractEventProjector $eventProjector
+    ) {
+        $this->eventStore = $eventStore;
+        $this->eventNotifier = $eventNotifier;
+        $this->eventProjector = $eventProjector;
     }
 
     public function handle(CreatePostCommand $createPostCommand)
     {
-        $post = new Post(
-            PostId::generate(),
+        $event = new PostWasCreated(
+            PostId::generate()->getValue(),
             $createPostCommand->getTitle(),
             $createPostCommand->getContent()
         );
 
-        $this->postRepository->addPost($post);
+        $this->eventStore->commit($event->serialize());
+        $this->eventProjector->project($event);
+        $this->eventNotifier->notify($event->serialize());
     }
 }

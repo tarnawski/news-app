@@ -10,7 +10,7 @@ interface AbstractPostRepository
 
     public function onePost($uuid);
 
-    public function addPost(Post $post);
+    public function addPost($uuid, $title, $content);
 
     public function deletePost($uuid);
 }

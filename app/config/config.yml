@@ -6,6 +6,10 @@ parameters:
     database_name:     news-app
     database_user:     root
     database_password: rootpassword
+    kafka_host: 10.0.0.201
+    kafka_timeout: 3000
+    kafka_port: 2181
+    kafka_topic: test
 
 framework:
     secret: '%secret_key%'
